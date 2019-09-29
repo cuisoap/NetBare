@@ -72,7 +72,7 @@ public final class NetBareVirtualGateway extends VirtualGateway {
             // Exclude the app itself.
             mLog.w("Exclude an app-self connection!");
             mPolicy = POLICY_DISALLOWED;
-        } else if (!config.allowedApplicationUids.isEmpty() &&
+        } else if (config.allowedApplicationUids != null &&
                 !config.allowedApplicationUids.contains(session.uid)) {
             // Exclude non-allowed application.
             mLog.w("Exclude non-allowed connection(uid : " + session.uid + ")!");
