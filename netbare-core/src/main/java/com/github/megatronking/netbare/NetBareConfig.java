@@ -55,6 +55,7 @@ public final class NetBareConfig {
     UidProvider uidProvider;
     boolean dumpUid;
     boolean excludeSelf;
+    boolean accessControl;
     SSLKeyManagerProvider keyManagerProvider;
     SSLTrustManagerProvider trustManagerProvider;
 
@@ -97,6 +98,7 @@ public final class NetBareConfig {
     public static NetBareConfig defaultConfig() {
         return new Builder()
                 .dumpUid(false)
+                .setAccessControl(false)
                 .setMtu(4096)
                 .setAddress(new IpAddress("10.1.10.1", 32))
                 .setSession("NetBare")
@@ -223,6 +225,23 @@ public final class NetBareConfig {
          */
         public Builder addAllowedApplication(@NonNull String packageName) {
             mConfig.allowedApplications.add(packageName);
+            return this;
+        }
+
+        /**
+         * set whether open access control
+         * <p>
+         * When access control is on, only application added with #addAllowedApplicationUid
+         * will be processed by netbare, other applications' packet will be transfered directly
+         *
+         * Only work with #dumpUid on
+         *
+         * @param accessControl
+         *
+         * @return this {@link Builder} object to facilitate chaining method calls.
+         */
+        public Builder setAccessControl(@NonNull boolean accessControl) {
+            mConfig.accessControl = accessControl;
             return this;
         }
 
